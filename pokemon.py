@@ -78,10 +78,22 @@ class Trainer:
 
 class Cube:
 	def left():
-		pass
+		print("Ok, let's go left")
+		print(left_room)
+		action = input(">>")
+		if action.lower() in conf:
+			return left_room.action()
+		else:
+			return start.choose_direction()
 
 	def right():
-		pass
+		print("Ok, let's go right")
+		print(right_room)
+		action = input(">>")
+		if action.lower() in conf:
+			return right_room.action()
+		else:
+			return start.choose_direction()
 
 	def up():
 		print("Ok, let's go forward")
@@ -93,15 +105,17 @@ class Cube:
 			return start.choose_direction()
 
 	def down():
-		pass
+		print("Ok, let's turn around and check what's behind your back")
+		print(down_room)
+		action = input(">>")
+		if action.lower() in conf:
+			return down_room.action()
+		else:
+			return start.choose_direction()
 
-class RandomPokemon:
-	def __init__(self, rand_list):
-		self.rand_list = rand_list
-
-	def random_pokemon(self):
-		pokemon = self.rand_list[random.randint(0,len(self.rand_list)-1)]
-		return pokemon
+def random_pokemon(rand_list):
+	pokemon = rand_list[random.randint(0,len(rand_list)-1)]
+	return pokemon
 
 class Room:
 	def __init__(self, pokemon):
@@ -113,6 +127,12 @@ class Room:
 	def action(self):
 		print("Action!")
 		return ash.attack_pokemon(self.pokemon)
+
+# TODO
+# if pokemon is is_knocked_out, finish battle
+# if not - continue
+# print who wins the battle
+# ask what's next
 
 class Engine:
 	def __repr__(self):
@@ -151,8 +171,11 @@ poke_list = [pikachu, bulbasaur, charmander, squirtle, psyduck, shellder]
 ash = Trainer("Ash Ketchum", [5,5,5,5], [pikachu, bulbasaur, charmander], pikachu)
 # brock = Trainer("Brock", [5,5,5,5], [squirtle,psyduck,shellder], psyduck)
 
-random_up_room = RandomPokemon(poke_list)
-up_room = Room(random_up_room.random_pokemon())
+up_room = Room(random_pokemon(poke_list))
+left_room = Room(random_pokemon(poke_list))
+right_room = Room(random_pokemon(poke_list))
+down_room = Room(random_pokemon(poke_list))
+
 start = Engine()
 print(start)
 start.choose_direction()
